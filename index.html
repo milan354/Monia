@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monia Hénault-Hog — Peintures</title>
+<meta name="description" content="Monia Hénault-Hog, peintre. Découvrez ses œuvres : paysages, figures, gestes intérieurs et fleurs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f1ece6; --ink:#211f1c; --rose:#c99a91; --clay:#a9887c;
+  --gold:#b08d4f; --grey:#8d8579; --line: rgba(33,31,28,0.14);
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+@media (pointer:fine){ html{scrollbar-gutter:stable;} }
+body{
+  background:var(--cream); color:var(--ink);
+  font-family:'Jost', sans-serif; font-weight:300;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{ font-family:'Cormorant Garamond', serif; font-weight:500; }
+a{ color:inherit; text-decoration:none; }
+img{ max-width:100%; display:block; }
+
+/* Header */
+header{
+  position:sticky; top:0; z-index:100;
+  background:rgba(241,236,230,0.92); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+  margin-bottom:-65px; transition:background 0.3s ease, border-color 0.3s ease;
+}
+body.home-hero header{
+  background:transparent; backdrop-filter:none; border-bottom-color:transparent;
+}
+body.home-hero header .navlink{ color:#fff; text-shadow:0 1px 10px rgba(0,0,0,0.25); }
+.header-inner{
+  padding:20px 32px;
+  display:flex; align-items:center; justify-content:flex-end; gap:36px;
+  position:relative;
+}
+nav{ display:flex; align-items:center; gap:36px; }
+.navlink{
+  font-size:0.92rem; letter-spacing:0.06em; text-transform:uppercase;
+  cursor:pointer; position:relative; padding:4px 0;
+}
+.navlink:hover{ color:var(--clay); }
+.dropdown{ position:relative; }
+.dropdown-menu{
+  position:absolute; top:calc(100% + 14px); left:50%; transform:translateX(-50%);
+  background:#fff; border:1px solid var(--line); min-width:240px;
+  box-shadow:0 18px 40px rgba(33,31,28,0.12);
+  opacity:0; visibility:hidden; transition:all 0.25s ease;
+  padding:10px 0;
+}
+.dropdown.open .dropdown-menu{ opacity:1; visibility:visible; top:calc(100% + 8px); }
+.dropdown-menu a{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:12px 22px; font-size:0.88rem; letter-spacing:0.03em;
+  border-bottom:1px solid var(--line);
+}
+.dropdown-menu a:last-child{ border-bottom:none; font-weight:500; color:var(--clay); }
+.dropdown-menu a:hover{ background:var(--cream); }
+.dropdown-menu .count{ color:var(--grey); font-size:0.78rem; }
+
+/* Views */
+.view{ display:none; }
+.view.active{ display:block; }
+
+/* Hero */
+.hero{
+  height:100vh; min-height:560px; display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:60px 24px; position:relative; overflow:hidden;
+}
+.hero-bg{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; z-index:0;
+}
+.hero::after{
+  content:''; position:absolute; inset:0; z-index:1;
+  background:linear-gradient(180deg, rgba(20,18,15,0.12) 0%, rgba(20,18,15,0.05) 40%, rgba(20,18,15,0.32) 100%);
+}
+.hero-content{ position:relative; z-index:2; }
+.hero h1{
+  font-size:clamp(2.3rem, 7.4vw, 8rem); white-space:nowrap;
+  letter-spacing:0.01em; line-height:1; color:#fff;
+  text-shadow:0 2px 30px rgba(0,0,0,0.25);
+}
+.hero-subtitle{
+  margin-top:22px; font-size:0.86rem; letter-spacing:0.38em;
+  text-transform:uppercase; color:#fff; opacity:0.9;
+  display:flex; align-items:center; justify-content:center; gap:16px;
+  text-shadow:0 1px 12px rgba(0,0,0,0.25);
+}
+.hero-subtitle::before, .hero-subtitle::after{
+  content:''; width:36px; height:1px; background:#fff; opacity:0.8; display:inline-block;
+}
+.hero-scroll{
+  position:absolute; left:32px; bottom:32px; z-index:2;
+  font-size:0.72rem; letter-spacing:0.28em; text-transform:uppercase;
+  color:#fff; opacity:0.85; display:flex; align-items:center; gap:12px;
+  text-shadow:0 1px 10px rgba(0,0,0,0.3);
+}
+.hero-scroll::before{ content:''; width:28px; height:1px; background:#fff; opacity:0.8; display:inline-block; }
+@media(max-width:700px){ .hero-scroll{ left:20px; bottom:20px; font-size:0.62rem; } }
+
+/* Category grid (home) */
+.cat-section{ max-width:1200px; margin:0 auto; padding:40px 32px 100px; }
+.cat-grid{
+  display:grid; grid-template-columns:repeat(2, 1fr); gap:28px;
+}
+.cat-card{
+  position:relative; aspect-ratio:4/5; overflow:hidden; cursor:pointer;
+  background:#000;
+}
+.cat-card img{
+  width:100%; height:100%; object-fit:cover; opacity:0.88;
+  transition:transform 0.7s ease, opacity 0.4s ease;
+}
+.cat-card:hover img{ transform:scale(1.05); opacity:1; }
+.cat-card .cat-label{
+  position:absolute; left:0; bottom:0; right:0; padding:26px 28px;
+  background:linear-gradient(to top, rgba(0,0,0,0.55), transparent);
+  color:#fff; font-family:'Cormorant Garamond', serif; font-size:1.7rem;
+}
+@media(max-width:700px){ .cat-grid{ grid-template-columns:1fr; } }
+
+/* Gallery grid */
+.gallery-header{ max-width:1200px; margin:0 auto; padding:64px 32px 20px; text-align:center; }
+.gallery-header h2{ font-size:clamp(2rem, 4vw, 3.2rem); }
+.gallery{
+  max-width:1300px; margin:0 auto; padding:40px 32px 100px;
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:34px 26px;
+  grid-auto-rows:1fr;
+}
+figure{ position:relative; overflow:hidden; cursor:pointer; background:#fff; }
+figure.tall{ grid-row:span 2; }
+figure img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  box-shadow:0 10px 30px rgba(33,31,28,0.10);
+  transition:transform 0.6s ease;
+}
+figure:hover img{ transform:scale(1.03); }
+figcaption{
+  position:absolute; left:0; right:0; bottom:0; padding:16px 18px;
+  background:linear-gradient(to top, rgba(33,31,28,0.75), transparent);
+  color:#fff; opacity:0; transition:opacity 0.35s ease;
+}
+figure:hover figcaption{ opacity:1; }
+@media(hover:none){ figcaption{ opacity:1; background:linear-gradient(to top, rgba(33,31,28,0.6), transparent 70%); } }
+figcaption .fig-title{ font-family:'Cormorant Garamond', serif; font-size:1.15rem; }
+figcaption .fig-dim{ font-size:0.72rem; letter-spacing:0.04em; opacity:0.85; margin-top:2px; }
+@media(max-width:900px){ .gallery{ grid-template-columns:repeat(2, 1fr); } }
+@media(max-width:520px){ .gallery{ grid-template-columns:1fr; } figure.tall{ grid-row:span 1; } }
+
+/* Lightbox */
+.lightbox{
+  position:fixed; inset:0; background:rgba(15,14,12,0.96); z-index:1000;
+  display:none; align-items:center; justify-content:center;
+}
+.lightbox.active{ display:flex; }
+.lightbox img{
+  max-width:92vw; max-height:90vh; object-fit:contain;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+}
+.lb-close, .lb-prev, .lb-next{
+  position:absolute; color:#fff; background:none; border:none; cursor:pointer;
+  font-size:1.8rem; font-family:'Jost',sans-serif; font-weight:300; opacity:0.75;
+  transition:opacity 0.2s ease;
+}
+.lb-close:hover, .lb-prev:hover, .lb-next:hover{ opacity:1; }
+.lb-close{ top:28px; right:36px; font-size:2rem; }
+.lb-prev{ left:24px; top:50%; transform:translateY(-50%); font-size:2.6rem; }
+.lb-next{ right:24px; top:50%; transform:translateY(-50%); font-size:2.6rem; }
+@media(max-width:600px){ .lb-prev, .lb-next{ font-size:2rem; } .lb-close{ top:16px; right:20px; } }
+
+/* About */
+.about-view{ max-width:1100px; margin:0 auto; padding:80px 32px 100px; }
+.about-grid{
+  display:grid; grid-template-columns:0.85fr 1.15fr; gap:60px; align-items:start;
+}
+.artist-visual img{ width:100%; box-shadow:0 18px 50px rgba(33,31,28,0.15); }
+.about-text h2{ font-size:clamp(2rem, 4vw, 3rem); margin-bottom:28px; }
+.about-text p{ font-size:1rem; line-height:1.85; margin-bottom:18px; color:#3a3733; }
+.artist-meta{
+  display:grid; grid-template-columns:1fr 1fr; gap:28px 36px;
+  margin-top:36px; padding-top:32px; border-top:1px solid var(--line);
+}
+.artist-meta .item span{
+  display:block; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--grey); margin-bottom:6px;
+}
+.artist-meta .item .val{ font-size:0.96rem; }
+@media(max-width:800px){ .about-grid{ grid-template-columns:1fr; } .artist-meta{ grid-template-columns:1fr; } }
+
+/* Contact */
+.contact-view{ max-width:1100px; margin:0 auto; padding:80px 32px 110px; }
+.contact-grid{
+  display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+}
+.contact-photo{
+  width:100%; aspect-ratio:1/1; overflow:hidden;
+  box-shadow:0 18px 50px rgba(33,31,28,0.18);
+}
+.contact-photo img{ width:100%; height:100%; object-fit:cover; }
+.contact-view h2{ font-size:clamp(2rem, 4vw, 3rem); margin-bottom:40px; }
+.contact-items{ display:flex; flex-direction:column; gap:22px; align-items:flex-start; }
+.contact-items .item{ display:flex; flex-direction:column; gap:6px; font-size:1.1rem; }
+.contact-items .item span{
+  font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--grey);
+}
+.contact-items .val:hover{ color:var(--clay); }
+@media(max-width:800px){ .contact-grid{ grid-template-columns:1fr; } .contact-photo{ max-width:340px; margin:0 auto; } .contact-items{ align-items:center; text-align:center; } }
+
+footer{ text-align:center; padding:36px; font-size:0.74rem; color:var(--grey); letter-spacing:0.05em; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <nav>
+      <a class="navlink" id="accueilLink" onclick="router.go('home')" style="display:none;">Accueil</a>
+      <div class="dropdown" id="oeuvresDropdown">
+        <a class="navlink" onclick="toggleDropdown(event)">Œuvres</a>
+        <div class="dropdown-menu" id="oeuvresMenu"></div>
+      </div>
+      <a class="navlink" onclick="router.go('about')">À Propos</a>
+      <a class="navlink" onclick="router.go('contact')">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="view active" id="view-home">
+    <div class="hero">
+      <img class="hero-bg" src="images/ciel_abstrait.jpg" alt="">
+      <div class="hero-content">
+        <h1>Monia Hénault-Hog</h1>
+        <p class="hero-subtitle">Peintures</p>
+      </div>
+      <div class="hero-scroll" onclick="document.querySelector('.cat-section').scrollIntoView({behavior:'smooth'})">Faire défiler</div>
+    </div>
+    <div class="cat-section">
+      <div class="cat-grid" id="catGrid"></div>
+    </div>
+  </section>
+
+  <section class="view" id="view-gallery">
+    <div class="gallery-header"><h2 id="galleryTitle"></h2></div>
+    <div class="gallery" id="galleryGrid"></div>
+  </section>
+
+  <section class="view" id="view-about">
+    <div class="about-view">
+      <div class="about-grid">
+        <div class="artist-visual">
+          <img src="images/coupe.jpg" alt="Œuvre représentative de l'artiste">
+        </div>
+        <div class="about-text">
+          <h2>À Propos</h2>
+          <p>La peinture est une rencontre.</p>
+          <p>Une rencontre avec le monde autour de moi : harmonies de couleurs, de compositions, jeux d'ombre et de lumière, dans la nature, en milieu urbain, entre les humains.</p>
+          <p>Une rencontre avec le monde en moi : expériences intérieures, images intérieures. Elles peuvent être inspirées par la littérature, la poésie, la musique, les rencontres humaines...</p>
+          <p>À travers l'acte artistique, le monde extérieur et intérieur se rencontrent dans la création d'une nouvelle œuvre.</p>
+          <div class="artist-meta">
+            <div class="item"><span>Médium</span><span class="val">Technique mixte — pigments, acrylique, pastels, fusain, sur papier et toile</span></div>
+            <div class="item"><span>Née en</span><span class="val">1979, au Mans</span></div>
+            <div class="item"><span>Parcours</span><span class="val">Études d'art et art-thérapie en Allemagne et en Suisse — art-thérapeute auprès de personnes porteuses de handicap</span></div>
+            <div class="item"><span>Expositions</span><span class="val">France, Suisse et Allemagne</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="view-contact">
+    <div class="contact-view">
+      <div class="contact-grid">
+        <div class="contact-photo">
+          <img src="images/monia_portrait.jpg" alt="Monia Hénault-Hog dans son atelier">
+        </div>
+        <div class="contact-items">
+          <div class="item"><span>Email</span><a class="val" href="mailto:heneaulthog.monia@gmail.com">heneaulthog.monia@gmail.com</a></div>
+          <div class="item"><span>Téléphone</span><a class="val" href="tel:+33760437201">07 60 43 72 01</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>&copy; Monia Hénault-Hog</footer>
+
+<div class="lightbox" id="lightbox" onclick="lbBackdropClick(event)">
+  <button class="lb-close" onclick="closeLightbox()">&times;</button>
+  <button class="lb-prev" onclick="lbPrev(event)">&#8249;</button>
+  <img id="lbImg" src="" alt="">
+  <button class="lb-next" onclick="lbNext(event)">&#8250;</button>
+</div>
+
+<script>
+const categories = [{"id": "paysages", "label": "Paysages & Ciels", "cover": "ciel_abstrait.jpg"}, {"id": "figures", "label": "Figures", "cover": "anges_couleur.jpg"}, {"id": "gestes", "label": "Gestes Intérieurs", "cover": "cascade.jpg"}, {"id": "fleurs", "label": "Fleurs", "cover": "bouquet_1.jpg"}];
+const works = [{"file": "ciel_abstrait.jpg", "title": "Nuages", "dim": "50 × 70 cm", "cat": "paysages", "tall": true}, {"file": "bateau_rose.jpg", "title": "Aurore", "dim": "50 × 70 cm", "cat": "paysages", "tall": true}, {"file": "nuit_etoilee.jpg", "title": "Nuit étoilée", "dim": "50 × 70 cm", "cat": "paysages", "tall": true}, {"file": "couleurs_abstraites_2.jpg", "title": "Marine", "dim": "80 × 100 cm", "cat": "gestes", "tall": false}, {"file": "cascade.jpg", "title": "Strom", "dim": "60 × 80 cm", "cat": "gestes", "tall": true}, {"file": "ele_mal_abstrait.jpg", "title": "Aufsteigen", "dim": "20 × 20 cm", "cat": "gestes", "tall": false}, {"file": "coupe.jpg", "title": "Coupe", "dim": "50 × 70 cm", "cat": "gestes", "tall": true}, {"file": "resurection_du_christ.jpg", "title": "Transformation", "dim": "60 × 80 cm", "cat": "gestes", "tall": false}, {"file": "abstrait_visage.jpg", "title": "Yeux clos", "dim": "50 × 40 cm", "cat": "gestes", "tall": true}, {"file": "couleurs_abstraites.jpg", "title": "Offrande", "dim": "40 × 50 cm", "cat": "gestes", "tall": true}, {"file": "champs_de_couleur.jpg", "title": "Innere Stimmung", "dim": "70 × 90 cm", "cat": "gestes", "tall": false}, {"file": "envol.jpg", "title": "Envol", "dim": "50 × 70 cm", "cat": "gestes", "tall": false}, {"file": "en_chemain.jpg", "title": "Lumière", "dim": "18 × 20 cm", "cat": "gestes", "tall": true}, {"file": "vert.jpg", "title": "Mystère", "dim": "30 × 45 cm", "cat": "gestes", "tall": true}, {"file": "poisson_abstrait.jpg", "title": "Voyage", "dim": "60 × 80 cm", "cat": "gestes", "tall": true}, {"file": "anges_couleur.jpg", "title": "Ich bin", "dim": "80 × 100 cm", "cat": "figures", "tall": true}, {"file": "personne_soleil_abstrait.jpg", "title": "Sur le chemin", "dim": "20 × 22 cm", "cat": "figures", "tall": true}, {"file": "corps_en_trait.jpg", "title": "Le baiser", "dim": "33 × 45 cm", "cat": "figures", "tall": true}, {"file": "ange_brun.jpg", "title": "Ange", "dim": "40 × 50 cm", "cat": "figures", "tall": true}, {"file": "ange_jaune.jpg", "title": "Ange de lumière", "dim": "50 × 70 cm", "cat": "figures", "tall": true}, {"file": "ange.jpg", "title": "Petit Ange", "dim": "12 × 17 cm", "cat": "figures", "tall": true}, {"file": "accompagne.jpg", "title": "Accompagné", "dim": "30 × 40 cm", "cat": "figures", "tall": true}, {"file": "empfangen.jpg", "title": "Empfagnen", "dim": "55 × 75 cm", "cat": "figures", "tall": true}, {"file": "marches.jpg", "title": "Stufen", "dim": "50 × 70 cm", "cat": "figures", "tall": true}, {"file": "vision.jpg", "title": "Vision", "dim": "55 × 75 cm", "cat": "figures", "tall": true}, {"file": "bleu.jpg", "title": "Aufrecht", "dim": "35 × 50 cm", "cat": "figures", "tall": true}, {"file": "esprits_couleurs_abstrait.jpg", "title": "Ich", "dim": "80 × 100 cm", "cat": "figures", "tall": true}, {"file": "ballons_couleur.jpg", "title": "Ballons", "dim": "30 × 45 cm", "cat": "figures", "tall": true}, {"file": "jardin.jpg", "title": "Jardin", "dim": "60 × 80 cm", "cat": "figures", "tall": true}, {"file": "suche.jpg", "title": "Suche", "dim": "50 × 80 cm", "cat": "figures", "tall": true}, {"file": "ciel_nuages_collines.jpg", "title": "Nuages sur les collines", "dim": "", "cat": "paysages", "tall": false}, {"file": "horizon_mer_sombre.jpg", "title": "Horizon sombre", "dim": "", "cat": "paysages", "tall": false}, {"file": "montagne_nocturne_silhouette.jpg", "title": "Silhouette nocturne", "dim": "", "cat": "paysages", "tall": true}, {"file": "soleil_plage_abstrait.jpg", "title": "Soleil levant", "dim": "", "cat": "paysages", "tall": true}, {"file": "abstrait_toile_brute.jpg", "title": "Toile brute", "dim": "", "cat": "gestes", "tall": true}, {"file": "racines_abstraites.jpg", "title": "Racines", "dim": "", "cat": "gestes", "tall": true}, {"file": "silhouette_escalier.jpg", "title": "L'escalier", "dim": "", "cat": "figures", "tall": true}, {"file": "bouquet_1.jpg", "title": "Bouquet I", "dim": "25 × 25 cm", "cat": "fleurs", "tall": false}, {"file": "bouquet_2.jpg", "title": "Bouquet II", "dim": "25 × 25 cm", "cat": "fleurs", "tall": false}, {"file": "bouquet_3.jpg", "title": "Bouquet III", "dim": "25 × 25 cm", "cat": "fleurs", "tall": false}, {"file": "bouquet_4.jpg", "title": "Bouquet IV", "dim": "25 × 25 cm", "cat": "fleurs", "tall": false}, {"file": "bouquet_5.jpg", "title": "Bouquet V", "dim": "25 × 25 cm", "cat": "fleurs", "tall": false}];
+
+let currentGalleryList = [];
+let currentLbIndex = 0;
+
+function toggleDropdown(e){
+  e.stopPropagation();
+  document.getElementById('oeuvresDropdown').classList.toggle('open');
+}
+function closeDropdown(){
+  document.getElementById('oeuvresDropdown').classList.remove('open');
+}
+document.addEventListener('click', closeDropdown);
+
+function renderCategoryGrid(){
+  const grid = document.getElementById('catGrid');
+  grid.innerHTML = categories.map(c => `
+    <div class="cat-card" onclick="router.go('gallery','${c.id}')">
+      <img src="images/${c.cover}" alt="${c.label}">
+      <div class="cat-label">${c.label}</div>
+    </div>
+  `).join('');
+}
+
+function renderOeuvresMenu(){
+  const menu = document.getElementById('oeuvresMenu');
+  const items = categories.map(c => {
+    const count = works.filter(w => w.cat === c.id).length;
+    return `<a onclick="router.go('gallery','${c.id}')">${c.label}<span class="count">${count}</span></a>`;
+  }).join('');
+  menu.innerHTML = items + `<a onclick="router.go('gallery','all')">Accéder à toute la galerie</a>`;
+}
+
+function renderGallery(catId){
+  const list = catId === 'all' ? works : works.filter(w => w.cat === catId);
+  currentGalleryList = list;
+  const cat = categories.find(c => c.id === catId);
+  document.getElementById('galleryTitle').textContent = catId === 'all' ? 'Toutes les œuvres' : (cat ? cat.label : '');
+  const grid = document.getElementById('galleryGrid');
+  grid.innerHTML = list.map((w, i) => `
+    <figure class="${w.tall ? 'tall' : ''}" onclick="openLightbox(${i})">
+      <img src="images/${w.file}" alt="${w.title}" loading="lazy">
+      <figcaption>
+        <div class="fig-title">${w.title}</div>
+        ${w.dim ? `<div class="fig-dim">${w.dim}</div>` : ''}
+      </figcaption>
+    </figure>
+  `).join('');
+}
+
+function openLightbox(i){
+  currentLbIndex = i;
+  updateLightbox();
+  document.getElementById('lightbox').classList.add('active');
+}
+function updateLightbox(){
+  const w = currentGalleryList[currentLbIndex];
+  const img = document.getElementById('lbImg');
+  img.src = 'images/' + w.file;
+  img.alt = w.title;
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('active');
+}
+function lbPrev(e){ e.stopPropagation(); currentLbIndex = (currentLbIndex - 1 + currentGalleryList.length) % currentGalleryList.length; updateLightbox(); }
+function lbNext(e){ e.stopPropagation(); currentLbIndex = (currentLbIndex + 1) % currentGalleryList.length; updateLightbox(); }
+function lbBackdropClick(e){ if(e.target.id === 'lightbox') closeLightbox(); }
+document.addEventListener('keydown', (e) => {
+  if(!document.getElementById('lightbox').classList.contains('active')) return;
+  if(e.key === 'Escape') closeLightbox();
+  if(e.key === 'ArrowLeft') lbPrev(e);
+  if(e.key === 'ArrowRight') lbNext(e);
+});
+
+const router = {
+  go(view, param){
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + view).classList.add('active');
+    closeDropdown();
+    closeLightbox();
+    window.scrollTo(0,0);
+    if(view === 'gallery') renderGallery(param);
+    location.hash = view === 'home' ? '' : (view === 'gallery' ? 'oeuvres/' + param : view);
+    document.getElementById('accueilLink').style.display = (view === 'home') ? 'none' : 'inline-block';
+    document.body.classList.toggle('home-hero', view === 'home');
+  }
+};
+
+function initFromHash(){
+  const h = location.hash.replace('#','');
+  if(h.startsWith('oeuvres/')){
+    router.go('gallery', h.split('/')[1]);
+  } else if(h === 'about'){
+    router.go('about');
+  } else if(h === 'contact'){
+    router.go('contact');
+  } else {
+    router.go('home');
+  }
+}
+
+renderCategoryGrid();
+renderOeuvresMenu();
+initFromHash();
+window.addEventListener('hashchange', initFromHash);
+</script>
+
+</body>
+</html>
